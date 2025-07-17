@@ -21,11 +21,14 @@ function App() {
     let [toggle, setToggle] = useState(0);
     const activeRow = playerTurn ^ toggle;
 
-    function fillEmpty(rowData) {
+    function fillEmpty(rowData) {	// Replaces empty cells with 1, uses + instead if
+					// there are already 10 digits
+	const digits = ['0','1','2','3','4','5','6','7','8','9'];
+	const allDigitsUsed = digits.every(sym => rowData.includes(sym));
+	console.log(allDigitsUsed);
 	return rowData.map(sym => {
-	    // If the value is null, undefined, or an empty string, replace it:
-	    if (sym === null || sym === undefined || sym === '') {
-		return '1';
+	    if (sym === null) {
+		return allDigitsUsed ? '+' : '1';
 	    }
 	    return sym;
 	});
@@ -77,10 +80,10 @@ function App() {
 
     function checkValidExpr(newBoard, row) {
 	const rowData = newBoard[row];
-	const newRow = fillEmpty(rowData);
+	const testRow = fillEmpty(rowData);
 
 	try {
-	    const result = evaluate(newRow);
+	    const result = evaluate(testRow);
 	    return 1;
 	} catch (err) {
 	    return 0;  // Syntax error
@@ -104,15 +107,12 @@ function App() {
 	setPlayerTurn(count % 2);
 	setToggle((Math.floor(count / 2)) % 2);
 
-	console.log(count)
-
 	if (count >= numSpaces * 2) {
 	    endGame(newBoard);
 	}
     }
 
     function endGame(board) {
-	console.log('game over')
 	setGameOver(true);
 
 	const score0 = evaluate(board[0]);
