@@ -36,6 +36,12 @@ const About = ({ onBack }) => {
             </span>
 
             <p>
+                <a href="https://github.com/snxliang/minimax" target="_blank">
+                    Git repo.
+                </a>
+            </p>
+
+            <p>
                 <a href="https://snxliang.github.io" target="_blank">
                     My personal site.
                 </a>
