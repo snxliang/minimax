@@ -1,0 +1,200 @@
+import { useState } from "react";
+import Board from "../components/Board";
+import "../styles/Game.css";
+
+const SYMBOLS = [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "+",
+    "-",
+    "*",
+    "/",
+];
+
+function Game() {
+    const [numSpaces, setNumSpaces] = useState(() => {
+        const saved = localStorage.getItem("numSpaces");
+        return saved ? Number(saved) : 5; // fallback to 5
+    });
+    const [gameOver, setGameOver] = useState(false);
+    const [scores, setScores] = useState([0, 0]);
+
+    const [board, setBoard] = useState(
+        Array(2)
+            .fill(null)
+            .map(() => Array(numSpaces).fill(null)),
+    );
+    const [currentSymbol, setCurrentSymbol] = useState(SYMBOLS[0]);
+    const [playerTurn, setPlayerTurn] = useState(0);
+    const [count, setCounter] = useState(1);
+    const [toggle, setToggle] = useState(0);
+    const activeRow = playerTurn ^ toggle;
+
+    function fillEmpty(rowData) {
+        // Replaces empty cells with 1
+        // uses + instead if there are already 10 digits
+        const digits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+        const allDigitsUsed = digits.every((sym) => rowData.includes(sym));
+        console.log(allDigitsUsed);
+        return rowData.map((sym) => {
+            if (sym === null) {
+                return allDigitsUsed ? "+" : "1";
+            }
+            return sym;
+        });
+    }
+
+    function evaluate(rowData) {
+        const cleaned = [];
+        let i = 0;
+
+        while (i < rowData.length) {
+            const sym = rowData[i];
+
+            if (sym === null) {
+                i++;
+                continue;
+            }
+
+            // If it's a digit, gather the full number
+            if (/\d/.test(sym)) {
+                let numStr = "";
+                while (i < rowData.length && /\d/.test(rowData[i])) {
+                    numStr += rowData[i];
+                    i++;
+                }
+
+                // Remove leading zeros (unless number is just '0')
+                numStr = numStr.replace(/^0+(?!$)/, "");
+                cleaned.push(...numStr.split(""));
+            } else {
+                // operator or other non-digit
+                cleaned.push(sym);
+                i++;
+            }
+        }
+
+        const expr = cleaned.join("");
+
+        const result = eval(expr);
+
+        return result;
+    }
+
+    function checkValidMove(row, col) {
+        if (board[row][col]) return 0; // prevents overwriting cells
+        if (row !== activeRow) return 0; // forces correct row
+        const rowData = board[row];
+        if (rowData.includes(currentSymbol)) return 0; // prevents duplicate symbols
+        return 1;
+    }
+
+    function checkValidExpr(newBoard, row) {
+        const rowData = newBoard[row];
+        const testRow = fillEmpty(rowData);
+
+        try {
+            const result = evaluate(testRow);
+            return 1;
+        } catch (err) {
+            return 0; // Syntax error
+        }
+    }
+
+    function handleCellClick(row, col) {
+        if (!checkValidMove(row, col)) return;
+
+        const newBoard = board.map((r) => [...r]);
+        newBoard[row][col] = currentSymbol;
+
+        if (!checkValidExpr(newBoard, row)) return;
+
+        setBoard(newBoard);
+
+        // Switch player
+        setCounter(count + 1);
+        setPlayerTurn(count % 2);
+        setToggle(Math.floor(count / 2) % 2);
+
+        if (count >= numSpaces * 2) {
+            endGame(newBoard);
+        }
+    }
+
+    function endGame(board) {
+        setGameOver(true);
+
+        const score0 = evaluate(board[0]);
+        const score1 = evaluate(board[1]);
+        setScores([score0, score1]);
+    }
+
+    return (
+        <div className="game-container">
+            {" "}
+            {/* Changed from "App" to "game-container" */}
+            {/* heading */}
+            <h1 className="heading">
+                Minimax
+                <select
+                    value={numSpaces}
+                    onChange={(e) => {
+                        const newSpaces = Number(e.target.value);
+                        setNumSpaces(newSpaces);
+                        localStorage.setItem("numSpaces", newSpaces);
+                        setBoard(
+                            Array(2)
+                                .fill(null)
+                                .map(() =>
+                                    Array(Number(e.target.value)).fill(null),
+                                ),
+                        );
+                        setCounter(1);
+                        setToggle(0);
+                        setPlayerTurn(0);
+                        setScores([0, 0]);
+                        setGameOver(false);
+                    }}
+                    className="spaces-select"
+                >
+                    <option value="3">3</option>
+                    <option value="5">5</option>
+                    <option value="7">7</option>
+                    <option value="9">9</option>
+                    <option value="11">11</option>
+                </select>
+            </h1>
+            <div style={{ marginBottom: "40px" }}>
+                {SYMBOLS.map((sym) => (
+                    <button
+                        key={sym}
+                        onClick={() => setCurrentSymbol(sym)}
+                        className={`symbol-button ${sym === currentSymbol ? "selected" : ""}`}
+                    >
+                        {sym}
+                    </button>
+                ))}
+            </div>
+            <div className="board-container">
+                <Board
+                    board={board}
+                    onCellClick={handleCellClick}
+                    activeRow={activeRow}
+                    playerTurn={playerTurn}
+                    gameOver={gameOver}
+                    scores={scores}
+                />
+            </div>
+        </div>
+    );
+}
+
+export default Game;

@@ -1,12 +1,12 @@
-import React from 'react';
-import './Cell.css';
+import React from "react";
+import "../styles/Cell.css";
 
 function Cell({ value, onClick }) {
     return (
-	<div className="cell" onClick={onClick}>
-	    {value || ''}
-	</div>
-    )
+        <div className="cell" onClick={onClick}>
+            {value || ""}
+        </div>
+    );
 }
 
- export default Cell
+export default Cell;

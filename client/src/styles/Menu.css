@@ -1,0 +1,84 @@
+/* menu */
+
+.hamburger-menu {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 999;
+}
+
+.hamburger-button {
+    background: transparent;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.hamburger-button:hover {
+    background: #555;
+}
+
+.hamburger-icon {
+    width: 1.6rem;
+    height: 1.6rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.hamburger-line {
+    width: 1.2rem;
+    height: 2px;
+    background: white;
+    transition: all 0.2s ease;
+    margin: 2px 0;
+}
+
+.hamburger-menu.open .hamburger-line:nth-child(1) {
+    opacity: 0;
+}
+
+.hamburger-menu.open .hamburger-line:nth-child(2) {
+}
+
+.hamburger-menu.open .hamburger-line:nth-child(3) {
+    opacity: 0;
+}
+
+.dropdown {
+    position: fixed;
+    height: 100%;
+    left: 0;
+    top: 0;
+    padding-top: 4rem;
+    background: #555;
+    min-width: 12rem;
+}
+
+.dropdown-item {
+    font-size: 1.2rem;
+    display: block;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border: none;
+    background: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.dropdown-item:hover {
+    background: #777;
+}
+
+/* for deselecting menu by clicking anywhere else */
+
+/*
+.backdrop {
+position: fixed;
+background-color: red;
+inset: 0;
+}
+ */

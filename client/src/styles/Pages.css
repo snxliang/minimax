@@ -1,0 +1,60 @@
+a {
+    text-decoration: none;
+}
+
+.email-protection::after {
+    content: attr(data-domain);
+}
+
+.email-protection::before {
+    content: attr(data-user);
+}
+
+.email-protection::hover {
+    display: none;
+}
+
+.email-hover {
+    position: relative;
+    cursor: help;
+}
+
+.email-hover .email-protection {
+    display: inline;
+}
+
+.email-hover .hover-text {
+    display: none;
+    background: #555;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.email-hover:hover .email-protection {
+    display: none;
+}
+
+.email-hover:hover .hover-text {
+    display: inline;
+}
+
+.settings-container {
+}
+
+.rules-container {
+    padding: 15dvw 15dvw;
+    text-align: left;
+    width: 70dvw;
+}
+
+.blog-container {
+    padding: 15dvw 15dvw;
+    text-align: left;
+    width: 70dvw;
+}
+
+.about-container {
+    padding: 15dvw 15dvw;
+    text-align: left;
+    width: 70dvw;
+}
