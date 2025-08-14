@@ -30,10 +30,24 @@ const Blog = ({ onBack }) => {
                 </li>
                 <li>
                     Customization - Settings page is currently empty. Maybe this
-                    would be a place to control numnber of spaces and customize
+                    would be a place to control number of spaces and customize
                     the available symbols. Additional symbols such as
                     parentheses, caret (for exponentiation), and decimal point
                     may make the game more interesting.
+                </li>
+                <li>
+                    Game Theory - This ties in with the computer agent. Is there
+                    an optimal strategy? If not, what are some{" "}
+                    <i>really good</i> strategies? You could probably write a
+                    paper on this...
+                </li>
+                <li>
+                    Online Multiplayer - Quite the undertaking, but I dream of
+                    creating something like{" "}
+                    <a href="https://lichess.org" target="_blank">
+                        lichess
+                    </a>{" "}
+                    but for Minimax.
                 </li>
             </ul>
         </div>

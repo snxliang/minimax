@@ -4,7 +4,7 @@ import "../styles/Pages.css";
 const About = ({ onBack }) => {
     return (
         <div className="about-container">
-            <h1>About</h1>
+            <h1>About Minimax</h1>
 
             <p>
                 This is a game I invented for my students at UCLA Math Circle
@@ -37,13 +37,13 @@ const About = ({ onBack }) => {
 
             <p>
                 <a href="https://github.com/snxliang/minimax" target="_blank">
-                    Git repo.
+                    git repo
                 </a>
             </p>
 
             <p>
                 <a href="https://snxliang.github.io" target="_blank">
-                    My personal site.
+                    my personal site
                 </a>
             </p>
         </div>

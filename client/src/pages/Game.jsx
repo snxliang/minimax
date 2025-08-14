@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useEffect } from "react";
 import Board from "../components/Board";
 import "../styles/Game.css";
 
@@ -37,6 +38,22 @@ function Game() {
     const [count, setCounter] = useState(1);
     const [toggle, setToggle] = useState(0);
     const activeRow = playerTurn ^ toggle;
+
+    useEffect(() => {
+        function handleKeyPress(e) {
+            const key = e.key;
+            if (SYMBOLS.includes(key)) {
+                setCurrentSymbol(key);
+            }
+        }
+
+        window.addEventListener("keydown", handleKeyPress);
+
+        // Cleanup
+        return () => {
+            window.removeEventListener("keydown", handleKeyPress);
+        };
+    }, []);
 
     function fillEmpty(rowData) {
         // Replaces empty cells with 1
