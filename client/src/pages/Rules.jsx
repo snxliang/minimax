@@ -25,12 +25,13 @@ const Rules = ({ onBack }) => {
                         In the next round, the players place a symbol on their
                         oponents row to try to minimize it
                     </li>
+                    <li>This pattern alternates until all spaces are filled</li>
                     <li>
                         Use numbers 0-9 and operators + - * / to build
                         expressions
                     </li>
                     <li>Each symbol can only be used once per row</li>
-                    <li>Each move must allow the final expression to parse.</li>
+                    <li>Each move must allow the final expression to parse</li>
                     <li>Leading zeroes are allowed, hence, e.g. 05 = 5</li>
                     <li>
                         + and - can be used as unary operators, e.g. 1 + - 2 = 1
@@ -52,12 +53,11 @@ const Rules = ({ onBack }) => {
                 <h2>Tips</h2>
                 <ul>
                     <li>
-                        You can select the symbol using either mouse or
-                        keyboard.
+                        You can select the symbol using either mouse or keyboard
                     </li>
                     <li>
                         You can change the size of the board by clicking the
-                        number next to the heading.
+                        number next to the heading
                     </li>
                 </ul>
             </section>
